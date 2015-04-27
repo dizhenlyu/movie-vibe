@@ -1,0 +1,12 @@
+.favs{
+	margin-top:2em;
+}
+
+.favs table{
+	text-align: center;
+}
+
+.favs table td{
+	padding-left: 0.8em;
+	padding-right: 0.8em;
+}

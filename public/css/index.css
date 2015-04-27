@@ -1,0 +1,32 @@
+
+header {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 999;
+    color: #fff;
+    background: rgba(0,0,0,0.5);
+    padding: 60px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    margin: -180px 0 0 -180px;
+    text-align: center;
+}
+
+header h1 {
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+    padding: 0 0 10px 0;
+    font-size: 3em;
+    font-style: italic;
+    font-family: 'Open Sans Condensed', Arial, sans-serif;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+    font-weight: 700;
+
+}
+
+header h1 span {
+    font-weight: 300;
+    font-style: normal;
+    font-size: 0.6em;
+}
