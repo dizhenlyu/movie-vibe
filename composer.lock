@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "30fade25d91fe6d1a1d169c1fda337ca",
+    "hash": "b6721c5ec24f125f1ac9d8a610d36769",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -934,6 +934,50 @@
                 "shell"
             ],
             "time": "2015-03-26 18:43:54"
+        },
+        {
+            "name": "pusher/pusher-php-server",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pusher/pusher-http-php.git",
+                "reference": "165f92cb93efa901e5bf0e17e962e725e3bc8381"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pusher/pusher-http-php/zipball/165f92cb93efa901e5bf0e17e962e725e3bc8381",
+                "reference": "165f92cb93efa901e5bf0e17e962e725e3bc8381",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Library for interacting with the Pusher REST API",
+            "homepage": "https://github.com/pusher/pusher-php-server",
+            "keywords": [
+                "events",
+                "php-pusher-server",
+                "publish",
+                "pusher",
+                "realtime",
+                "rest",
+                "trigger"
+            ],
+            "time": "2015-03-03 15:52:18"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2934,7 +2978,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "pusher/pusher-php-server": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

@@ -75,52 +75,24 @@ Route::post('login', function(){
 	return redirect('login');
 });
 
-Route::get('/dashboard', ['middleware' => 'auth', function(){
+Route::get('/dashboard', ['middleware' => 'auth', 'uses'=>'DashboardController@getDashboard']);
 
-	$genre_id = Auth::user()->genre_id;
-	$genre_tmdb_id = Genre::find($genre_id)->genre_tmdb_id;
-	$genre_name = Genre::find($genre_id)->genre_name;
-	$movies = Tmdb::getMovies($genre_tmdb_id);
-	$genres = Genre::all();
+Route::post('/dashboard', ['middleware' => 'auth', 'uses'=>'DashboardController@postDashboard']);
 
-	return view('dashboard',[
-		'movies' => $movies,
-		'genres' => $genres,
-		'genre_name' => $genre_name
-	]);
-}]);
-
-Route::post('/dashboard', ['middleware' => 'auth', function(){
-
-	$movieEntry = new Movie();
-
-	$movieEntry->title = Request::input('title');
-	$movieEntry->tmdb_id = Request::input('tmdb_id');
-	$movieEntry->tmdb_rating = Request::input('vote');
-	$movieEntry->poster_link = Request::input('poster');
-
-	$movieEntry->owned_by_user_id = Auth::user()->id;
-	$movieEntry->genre_id = Auth::user()->genre_id;
-
-	$movieEntry->save();
-
-	return redirect('dashboard');
-}]);
-
-Route::get('/favorites', ['middleware' => 'auth', function(){
+Route::get('/favorites', ['middleware' => 'auth.basic', function(){
 
 	$user_id = Auth::user()->id;
 
 	//ORM, eager loading
-	$favs = Movie::with('genre')->where('owned_by_user_id', '=', $user_id)->get();
+	$favs = Movie::with('genre')->where('user_id', '=', $user_id)->get();
 
 	return view('favorites',[
-		'favs' => $favs,
+		'favs' => $favs
 	]);
 
 }]);
 
-Route::post('/favorites', ['middleware' => 'auth', function(){
+Route::post('/favorites', ['middleware' => 'auth.basic', function(){
 
 	$movie_id = Request::input('movie_id');
 	$movieEntry = Movie::find($movie_id);
@@ -130,7 +102,7 @@ Route::post('/favorites', ['middleware' => 'auth', function(){
 
 }]);
 
-Route::post('/changeGenre', ['middleware' => 'auth', function(){
+Route::post('/changeGenre', ['middleware' => 'auth.basic', function(){
 
 	$user_id = Request::input('user_id');
 	$user = User::find($user_id);
@@ -139,6 +111,17 @@ Route::post('/changeGenre', ['middleware' => 'auth', function(){
 	$user->save();
 
 	return redirect('dashboard');
+
+}]);
+
+Route::get('/activities', ['middleware' => 'auth.basic', function(){
+
+	$movies = Movie::with('user')->get();
+
+
+	return view('activities', [
+		'movies' => $movies
+	]);
 
 }]);
 

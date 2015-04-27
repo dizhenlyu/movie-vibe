@@ -42,51 +42,62 @@
 		<div class="main">
 			<header class="header">
 				<h1>Hey {{Auth::user()->username}}!</h1>
-				<h2>Here are your favorite movies!</h2>
+				<h2>Check your friend's favorites!</h2>
 			</header>
 			<center>
 			<div class="favs">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>Poster</th>
-							<th>Title</th>
-							<th>Genre</th>
-							<th>TMDB_ID</th>
-							<th>Rating</th>
-							<th>Created At</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach ($favs as $fav)
-						<tr>
-							<td><img src="http://image.tmdb.org/t/p/w185{{$fav->poster_link}}"></td>
-							<td>{{$fav->title}}</td>
-							<td>{{$fav->genre->genre_name}}</td>
-							<td>{{$fav->tmdb_id}}</td>
-							<td>{{$fav->tmdb_rating}}</td>
-							<td>{{$fav->created_at}}</td>
-							<td>
-								<form method="post">
-									<input type="hidden" name="_token" value="{{csrf_token()}}">
-									<input type="hidden" name="movie_id" value="{{$fav->id}}">
-
-									<button type="submit">Remove</button>
-								</form>
-							</td>
-						</tr>
-						@endforeach	
-					</tbody>
+				<table class="table table-striped" id="movies">
+					@foreach($movies as $movie)
+					<tr>
+						<td>{{$movie->user->username}}</td>
+						<td><img src="http://image.tmdb.org/t/p/w185{{$movie->poster_link}}"></td>
+						<td>{{$movie->title}}</td>
+						<td>{{$movie->genre->genre_name}}</td>
+						<td>{{$movie->tmdb_id}}</td>
+						<td>{{$movie->tmdb_rating}}</td>
+						<td>{{$movie->created_at}}</td>
+					</tr>
+					@endforeach
 				</table>
 			</div>
 			</center>
 		</div>
 	</div>
+
+	<script type="text/handlebars" id="movie-template">
+		<tr>
+			<td>@{{$user->username}}</td>
+			<td><img src="http://image.tmdb.org/t/p/w185@{{$movie->poster_link}}"></td>
+			<td>@{{$movie->title}}</td>
+			<td>@{{$movie->genre->genre_name}}</td>
+			<td>@{{$movie->tmdb_id}}</td>
+			<td>@{{$movie->tmdb_rating}}</td>
+			<td>@{{$movie->created_at}}</td>
+		</tr>
+	</script>
 @stop
 
 
 @section('scripts')
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://js.pusher.com/2.2/pusher.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.2/handlebars.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script>
+		var movieTemplate = Handlebars.compile($('#movie-template').html());
+		var pusher = new Pusher('2ea8a452caee25bb9515');
+
+		var channel = pusher.subscribe('movie_channel');
+
+		channel.bind('newmovie', function(data){
+			var movie = JSON.parse(data.movie);
+			var html = movieTemplate(movie);
+			$('#movies tbody').prepend(html);
+			toastr.success(song.title + ' was added!');
+		}
+
+	</script>
+
 	<script src="js/classie.js"></script>
 	<script src="js/toucheffects.js"></script>
 

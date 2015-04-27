@@ -33,7 +33,19 @@ class AuthenticateWithBasicAuth implements Middleware {
 	 */
 	public function handle($request, Closure $next)
 	{
-		return $this->auth->basic() ?: $next($request);
+		if ($this->auth->guest())
+		{
+			if ($request->ajax())
+			{
+				return response('Unauthorized.', 401);
+			}
+			else
+			{
+				return redirect()->guest('/');
+			}
+		}
+
+		return $next($request);
 	}
 
 }
