@@ -4,6 +4,14 @@ use Cache;
 
 class Tmdb{
 
+	protected $cache;
+	protected $client;
+
+	public function __construct(\Illuminate\Cache\Repository $cache, $client){
+		$this->cache = $cache;
+		$this->client = $client;
+	}
+
 	public static function getMovies($genre_id){
 
 		if(Cache::has("list-$genre_id")){
@@ -17,6 +25,16 @@ class Tmdb{
 		
 		return json_decode($jsonString)->results;
 		
+	}
+
+	public function search($genre_id){
+		if ($this->cache->has($genre_id)){
+			return json_decode($this->cache->get($genre_id));
+		}
+
+		$json = $this->client->get('http://api.themoviedb.org/3/genre/' . urlencode($genre_id));
+		$this->cache->put($genre_id, $json, 60);
+		return json_decode($json);
 	}
 }
 ?>

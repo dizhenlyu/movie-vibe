@@ -79,12 +79,14 @@ Route::get('/dashboard', ['middleware' => 'auth', function(){
 
 	$genre_id = Auth::user()->genre_id;
 	$genre_tmdb_id = Genre::find($genre_id)->genre_tmdb_id;
+	$genre_name = Genre::find($genre_id)->genre_name;
 	$movies = Tmdb::getMovies($genre_tmdb_id);
 	$genres = Genre::all();
 
 	return view('dashboard',[
 		'movies' => $movies,
-		'genres' => $genres
+		'genres' => $genres,
+		'genre_name' => $genre_name
 	]);
 }]);
 
@@ -108,9 +110,12 @@ Route::post('/dashboard', ['middleware' => 'auth', function(){
 Route::get('/favorites', ['middleware' => 'auth', function(){
 
 	$user_id = Auth::user()->id;
-	$favs = Movie::where('owned_by_user_id', '=', $user_id)->get();
+
+	//ORM, eager loading
+	$favs = Movie::with('genre')->where('owned_by_user_id', '=', $user_id)->get();
+
 	return view('favorites',[
-		'favs' => $favs
+		'favs' => $favs,
 	]);
 
 }]);

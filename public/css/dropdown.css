@@ -1,0 +1,25 @@
+.cd-select {
+	position: relative;
+	width: 230px;
+	height: 34px;
+	margin: 1.5em auto;
+	display: block;
+}
+
+/* Select fallback styling */
+.cd-select {
+	border: 2px solid #ddd;
+	font-family: 'Raleway', Arial, sans-serif;
+	  font-weight: bold;
+	    font-size: 1.15em;
+	       line-height: 1;
+background:transparent;
+color: #fff;
+text-align: center;
+}
+
+.cd-select option{
+	font-family: 'Raleway', Arial, sans-serif;
+		  font-weight: bold;
+	    font-size: 1.2em;
+}

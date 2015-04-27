@@ -7,16 +7,15 @@
 
 	<link rel="stylesheet" type="text/css" href="css/menu.css" />
 	<link rel="stylesheet" type="text/css" href="css/sidebar.css" />
-	<link rel="stylesheet" type="text/css" href="css/bootstrp.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/hover.css" />
+	<link rel="stylesheet" type="text/css" href="css/dropdown.css" />
+
 	<script src="js/modernizr.custom.js"></script>
 	<script src="js/snap.svg-min.js"></script>
 
 @stop
-		
 
 @section('content')
-
 <!-- 
 	Welcome {{Auth::user()->username}}!
 	Your genre id is {{Auth::user()->genre_id}}.
@@ -28,8 +27,7 @@
 				<ul>
 					<li><a href="dashboard"><i class="fa fa-fw fa-home"></i><span>Home<span></a></li>
 					<li><a href="favorites"><i class="fa fa-fw fa-heart"></i><span>Favs<span></a></li>
-					<li><a href="#"><i class="fa fa-fw fa-folder"></i><span>Files<span></a></li>
-					<li><a href="#"><i class="fa fa-fw fa-tachometer"></i><span>Stats<span></a></li>
+					<li><a href="activities"><i class="fa fa-fw fa-comments"></i><span>Activities<span></a></li>
 					<li><a href="{{url('logout')}}"><i class="fa fa-fw fa-sign-out"></i><span>Logout<span></a></li>
 				</ul>
 			</div>
@@ -43,22 +41,19 @@
 			<header class="header">
 				<h1>Welcome {{Auth::user()->username}}!</h1>
 				<h2>Movies from your chosen genre are ready!</h2>
-				<h3>Switch your genre to </h3>
-				<form method="post" action="changeGenre">
+				<!--<h3>Switch your genre to </h3>-->				
+					<form method="post" action="changeGenre" role="form">
 					<input type="hidden" name="_token" value="{{csrf_token()}}">
 					<input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-
-					<div class="form-group">
-						<label for="genre_id">Genre: </label>
-						<select name="genre_id" class="form-control">
-							@foreach($genres as $genre)
-									<option value="{{$genre->id}}">
-										{{$genre->genre_name}}
-									</option>
-							@endforeach
-						</select>
-					</div>
-					<input type="submit" value="Submit">
+					<select class="cd-select" name="genre_id" id="genre_id" onchange="this.form.submit()">
+						<option value="{{Auth::user()->genre_id}}">{{$genre_name}}</option>
+						@foreach($genres as $genre)
+							<option value="{{$genre->id}}">
+									{{$genre->genre_name}}
+							</option>
+						@endforeach
+					</select>
+					<noscript><input type="submit" value="Submit"></noscript>
 				</form>
 			</header>
 <!-- 			@foreach($movies as $movie)
@@ -68,6 +63,7 @@
 			@endforeach -->
 			<ul class="grid cs-style-3">
 				@foreach($movies as $movie)
+				@if($movie->poster_path)
 				<li>
 					<figure>
 					<img src="http://image.tmdb.org/t/p/w500{{$movie->poster_path}}">
@@ -86,6 +82,7 @@
 						</figcaption>
 					</figure>
 				</li>
+				@endif
 				@endforeach
 			</ul>
 		</div><!-- /main -->
@@ -94,6 +91,7 @@
 @stop
 
 @section('scripts')
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="js/classie.js"></script>
 	<script src="js/toucheffects.js"></script>
 

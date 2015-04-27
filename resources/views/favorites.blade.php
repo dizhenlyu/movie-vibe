@@ -64,7 +64,7 @@
 						<tr>
 							<td><img src="http://image.tmdb.org/t/p/w185{{$fav->poster_link}}"></td>
 							<td>{{$fav->title}}</td>
-							<td>{{$fav->genre_id}}</td>
+							<td>{{$fav->genre->genre_name}}</td>
 							<td>{{$fav->tmdb_id}}</td>
 							<td>{{$fav->tmdb_rating}}</td>
 							<td>{{$fav->created_at}}</td>
