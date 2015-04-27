@@ -66,13 +66,13 @@
 
 	<script type="text/handlebars" id="movie-template">
 		<tr>
-			<td>@{{$user->username}}</td>
-			<td><img src="http://image.tmdb.org/t/p/w185@{{$movie->poster_link}}"></td>
-			<td>@{{$movie->title}}</td>
-			<td>@{{$movie->genre->genre_name}}</td>
-			<td>@{{$movie->tmdb_id}}</td>
-			<td>@{{$movie->tmdb_rating}}</td>
-			<td>@{{$movie->created_at}}</td>
+			<td>@{{user->username}}</td>
+			<td><img src="http://image.tmdb.org/t/p/w185@{{poster_link}}"></td>
+			<td>@{{title}}</td>
+			<td>@{{genre->genre_name}}</td>
+			<td>@{{tmdb_id}}</td>
+			<td>@{{tmdb_rating}}</td>
+			<td>@{{created_at}}</td>
 		</tr>
 	</script>
 @stop
@@ -90,10 +90,11 @@
 		var channel = pusher.subscribe('movie_channel');
 
 		channel.bind('newmovie', function(data){
+			console.log(data)
 			var movie = JSON.parse(data.movie);
 			var html = movieTemplate(movie);
 			$('#movies tbody').prepend(html);
-			toastr.success(song.title + ' was added!');
+			toastr.success(movie.title + ' was added!');
 		}
 
 	</script>
