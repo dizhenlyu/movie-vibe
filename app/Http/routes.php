@@ -75,61 +75,27 @@ Route::post('login', function(){
 	return redirect('login');
 });
 
-Route::get('/dashboard', ['middleware' => 'auth', 'uses'=>'DashboardController@getDashboard']);
-
-Route::post('/dashboard', ['middleware' => 'auth', 'uses'=>'DashboardController@postDashboard']);
-
-Route::get('/favorites', ['middleware' => 'auth.basic', function(){
-
-	$user_id = Auth::user()->id;
-
-	//ORM, eager loading
-	$favs = Movie::with('genre')->where('user_id', '=', $user_id)->get();
-
-	return view('favorites',[
-		'favs' => $favs
-	]);
-
-}]);
-
-Route::post('/favorites', ['middleware' => 'auth.basic', function(){
-
-	$movie_id = Request::input('movie_id');
-	$movieEntry = Movie::find($movie_id);
-	$movieEntry->delete();
-
-	return redirect('favorites');
-
-}]);
-
-Route::post('/changeGenre', ['middleware' => 'auth.basic', function(){
-
-	$user_id = Request::input('user_id');
-	$user = User::find($user_id);
-	$user->genre_id = Request::input('genre_id');
-
-	$user->save();
-
-	return redirect('dashboard');
-
-}]);
-
-Route::get('/activities', ['middleware' => 'auth.basic', function(){
-
-	$movies = Movie::with('user')->get();
-
-
-	return view('activities', [
-		'movies' => $movies
-	]);
-
-}]);
-
 Route::get('logout', function(){
 
 	Auth::logout();
 
 	return redirect('login');
+});
+
+Route::group(['middleware' => 'auth'], function(){
+
+	Route::get('/dashboard', 'DashboardController@getDashboard');
+
+	Route::post('/dashboard', 'DashboardController@postDashboard');
+
+	Route::get('/favorites', 'FavoritesController@getFavorites');
+
+	Route::post('/favorites', 'FavoritesController@postFavorites');
+
+	Route::post('/changeGenre', 'DashboardController@changeGenre');
+
+	Route::get('/activities', 'ActivitiesController@getActivities');
+
 });
 
 Route::controllers([

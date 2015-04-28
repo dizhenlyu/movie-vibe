@@ -46,6 +46,16 @@ class DashboardController extends Controller {
 			'movie' => $movieEntry->toJson()
 		]);
 
-		return redirect('activities');
+		return redirect('dashboard');
+	}
+
+	public function changeGenre(Request $request){
+		$user_id = $request->input('user_id');
+		$user = User::find($user_id);
+		$user->genre_id = $request->input('genre_id');
+
+		$user->save();
+
+		return redirect('dashboard');
 	}
 }

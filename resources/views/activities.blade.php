@@ -7,7 +7,6 @@
 
 	<link rel="stylesheet" type="text/css" href="css/menu.css" />
 	<link rel="stylesheet" type="text/css" href="css/sidebar.css" />
-	<link rel="stylesheet" type="text/css" href="css/bootstrp.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/hover.css" />
 	<link rel="stylesheet" type="text/css" href="css/favs.css" />
 	<script src="js/modernizr.custom.js"></script>
