@@ -17,11 +17,19 @@ class DashboardController extends Controller {
 		$movies = Tmdb::getMovies($genre_tmdb_id);
 		$genres = Genre::all();
 
-		return view('dashboard',[
-			'movies' => $movies,
-			'genres' => $genres,
-			'genre_name' => $genre_name
-		]);
+		if($movies){
+			return view('dashboard',[
+				'movies' => $movies,
+				'genres' => $genres,
+				'genre_name' => $genre_name
+			]);
+		}else{
+			return view('dashboard',[
+				'movies' => Tmdb::getMovies('28'),
+				'genres' => $genres,
+				'genre_name' => $genre_name
+			]);			
+		}
 	}
 
 	public function postDashboard(Request $request){
