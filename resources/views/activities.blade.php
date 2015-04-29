@@ -65,10 +65,10 @@
 
 	<script type="text/handlebars" id="movie-template">
 		<tr>
-			<td>@{{user->username}}</td>
+			<td>@{{username}}</td>
 			<td><img src="http://image.tmdb.org/t/p/w185@{{poster_link}}"></td>
 			<td>@{{title}}</td>
-			<td>@{{genre->genre_name}}</td>
+			<td>@{{genre_name}}</td>
 			<td>@{{tmdb_id}}</td>
 			<td>@{{tmdb_rating}}</td>
 			<td>@{{created_at}}</td>
@@ -94,7 +94,7 @@
 			var html = movieTemplate(movie);
 			$('#movies tbody').prepend(html);
 			toastr.success(movie.title + ' was added!');
-		}
+		});
 
 	</script>
 

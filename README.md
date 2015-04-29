@@ -2,5 +2,7 @@
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
 
+Got Pusher working in Activities page! If one user adds a movie to favorite, All other users will know this immediately in activities page. This is an addition to my screencast since I uploaded the video on Monday.
+
 mymovievibe.com
 https://youtu.be/vKlItJG6N-c

@@ -49,6 +49,9 @@ class DashboardController extends Controller {
 		$app_id = '117496';
 		$app_secret = '3855052ac2be948888f5';
 
+		$movieEntry->username = User::find(Auth::user()->id)->username;
+		$movieEntry->genre_name = Genre::find(Auth::user()->genre_id)->genre_name;
+
 		$pusher = new Pusher($app_key, $app_secret, $app_id);
 		$pusher->trigger('movie_channel', 'newmovie',[
 			'movie' => $movieEntry->toJson()
