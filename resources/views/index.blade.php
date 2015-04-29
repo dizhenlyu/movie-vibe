@@ -31,7 +31,7 @@
         $(function() {
             BV = new $.BigVideo();
             BV.init();
-            BV.show('https://www.dropbox.com/s/3vdn4sikweibqh9/movies.mp4',{ambient:true});
+            BV.show('vid/movies.mp4',{ambient:true});
         });
     </script>
 @stop
