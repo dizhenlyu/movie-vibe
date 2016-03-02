@@ -31,7 +31,7 @@
         $(function() {
             BV = new $.BigVideo();
             BV.init();
-            BV.show('http://diworkstation.com/mrnailart/wp-content/uploads/2015/04/movies.mp4',{ambient:true});
+            BV.show('https://s3-us-west-1.amazonaws.com/dizhenlyu/movies.mp4',{ambient:true});
         });
     </script>
 @stop
